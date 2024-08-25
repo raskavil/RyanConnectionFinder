@@ -5,7 +5,6 @@ public class AvailabilitiesRequest
     
     public static string[]? FlightDates(string[] route)
     {
-        /*
         string[]? MergedDates = null; 
         string urlbase = "https://www.ryanair.com/api/farfnd/3/oneWayFares/{0}/{1}/availabilities";
         
@@ -29,9 +28,10 @@ public class AvailabilitiesRequest
             }
             
         }
-        return MergedDates.ToArray();
-        */
+        return MergedDates?.ToArray();
         
+        /*
+        OLD IMPLEMENTATION:
         string url1 = "https://www.ryanair.com/api/farfnd/3/oneWayFares/{lhs}/{transfer}/availabilities";
         string url2 = "https://www.ryanair.com/api/farfnd/3/oneWayFares/{transfer}/{rhs}/availabilities";
         
@@ -40,5 +40,7 @@ public class AvailabilitiesRequest
 
         var MergedDates = dates1.Intersect(dates2);
         return MergedDates.ToArray();
+        
+        */
     }
 }

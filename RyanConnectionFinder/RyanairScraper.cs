@@ -6,7 +6,7 @@ namespace RyanConnectionFinder;
 
 public static class RyanairScraper {
 
-    public static string[]? AreAirportsConnectable(string lhs, string rhs)
+    public static string[][]? Routes(string lhs, string rhs)
     {
         const string url = "https://www.ryanair.com/api/views/locate/3/aggregate/all/en";
         var locations = NetworkClient.GetDataAsync<RyanairLocations>(url: url).Result;
@@ -17,7 +17,7 @@ public static class RyanairScraper {
         
         if (fromRoutes.Any(x => x == rhs))
         {
-            return [lhs, rhs];
+            return [[lhs, rhs]];
         }
 
         var toRoutes = locations.Airports.FirstOrDefault(x => x.IataCode == rhs).AirportRoutes;
@@ -26,9 +26,16 @@ public static class RyanairScraper {
             return null;
         }
 
-        var transfer = fromRoutes.Intersect(toRoutes).First();
+        var transfer = fromRoutes.Intersect(toRoutes).ToArray();
 
-        return [lhs, transfer, rhs];
+        if (transfer.Length == 0)
+        {
+            #warning Currently only route of three airports is considered. Open to additional implementation.
+            return null;
+            
+        }
+        
+        return transfer.Select(x => new string[] { lhs, x, rhs }).ToArray();
     }
 
     public static List<List<Connection>> Trips(string[] route, string[] dates)

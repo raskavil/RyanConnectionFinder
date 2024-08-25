@@ -25,13 +25,13 @@ if (string.IsNullOrEmpty((toCity)))
     Console.WriteLine("Invalid input");
     return;
 }
-var airportsConnection = RyanairScraper.AreAirportsConnectable(fromCity, toCity);
+/*var airportsConnection = RyanairScraper.AreAirportsConnectable(fromCity, toCity);
 if (airportsConnection == null || airportsConnection.Length == 0) {
     Console.WriteLine("Connection not found");
     return;
 }
-
-var FlightDates = AvailabilitiesRequest.FlightDates(fromCity, transferCity, toCity);
+*/
+var FlightDates = AvailabilitiesRequest.FlightDates([fromCity, transferCity, toCity]);
 if (FlightDates == null || FlightDates.Length == 0) {
     Console.WriteLine("No flights same day");
     return;
