@@ -17,7 +17,6 @@ if (string.IsNullOrEmpty((toCity)))
     Console.WriteLine("Invalid input");
     return;
 }
-
 var airportsConnection = RyanairScraper.AreAirportsConnectable(fromCity, toCity);
 if (airportsConnection == null || airportsConnection.Length == 0) {
     Console.WriteLine("Connection not found");

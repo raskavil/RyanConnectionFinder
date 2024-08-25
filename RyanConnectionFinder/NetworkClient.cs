@@ -8,12 +8,22 @@ public static class NetworkClient
     private static readonly JsonSerializerOptions Options = new JsonSerializerOptions
         { PropertyNameCaseInsensitive = true };
 
-    public static async Task<T?> GetDataAsync<T>(string url)
+    public static async Task<T?> GetDataAsync<T>(string url, Dictionary<string, string>? headers = null)
     {
         try
         {
-            var response = await HttpClient.GetAsync(url);
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
 
+            if (headers != null)
+            {
+                foreach (KeyValuePair<string, string> entry in headers)
+                {
+                    requestMessage.Headers.Add(entry.Key, entry.Value);
+                }
+            }
+            
+            var response = await HttpClient.SendAsync(requestMessage);
+            
             response.EnsureSuccessStatusCode();
 
             var responseBody = await response.Content.ReadAsStringAsync();
