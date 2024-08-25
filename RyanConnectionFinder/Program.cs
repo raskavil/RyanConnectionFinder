@@ -10,6 +10,14 @@ if (string.IsNullOrEmpty(fromCity))
     return;
 }
 
+Console.WriteLine("Enter transfer");
+var transferCity = Console.ReadLine();
+if (string.IsNullOrEmpty((transferCity)))
+{
+    Console.WriteLine("Invalid input");
+    return;
+}
+
 Console.WriteLine("Enter to airport");
 var toCity = Console.ReadLine();
 if (string.IsNullOrEmpty((toCity)))
@@ -24,4 +32,12 @@ if (airportsConnection == null || airportsConnection.Length == 0) {
     return;
 }
 
-Console.WriteLine("Connection: " + string.Join(" -> ", airportsConnection));
+var FlightDates = AvailabilitiesRequest.FlightDates(fromCity, transferCity, toCity);
+if (FlightDates == null || FlightDates.Length == 0) {
+    Console.WriteLine("No flights same day");
+    return;
+}
+
+
+//Console.WriteLine("Connection: " + string.Join(" -> ", airportsConnection));
+Console.WriteLine("Flight dates: " + string.Join(" or ", FlightDates));
