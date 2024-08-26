@@ -5,30 +5,33 @@ public class AvailabilitiesRequest
     
     public static string[]? FlightDates(string[] route)
     {
-        string[]? MergedDates = null; 
-        string urlbase = "https://www.ryanair.com/api/farfnd/3/oneWayFares/{0}/{1}/availabilities";
+        string[]? mergedDates = null; 
         
-        for (int i = 0; i < route.Length-1; i++) 
+        for (var i = 0; i < route.Length-1; i++) 
         {
-            string url = urlbase.Replace("{0}", route[i]).Replace("{1}", route[i + 1]);
+            var url = $"https://www.ryanair.com/api/farfnd/3/oneWayFares/{route[i]}/{route[i+1]}/availabilities";
             var dates = NetworkClient.GetDataAsync<string[]>(url: url).Result;
+            
+            if (dates == null)
+            {
+                return null;
+            }
 
             if (i == 0)
             {
-                MergedDates = dates;
+                mergedDates = dates;
             }
-                
             else
             {
-                MergedDates = MergedDates.Intersect(dates).ToArray();
-                if (MergedDates.Length == 0)
+                mergedDates = mergedDates?.Intersect(dates).ToArray();
+                if (mergedDates?.Length == 0)
                 {
-                    break;
+                    return null;
                 }
             }
             
         }
-        return MergedDates?.ToArray();
+        return mergedDates?.ToArray();
         
         /*
         OLD IMPLEMENTATION:

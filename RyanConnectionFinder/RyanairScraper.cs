@@ -61,7 +61,7 @@ public static class RyanairScraper {
                 var flight = response.Trips.FirstOrDefault().Dates.FirstOrDefault().Flights.FirstOrDefault();
                 
                 if (connections.Count != 0 && String.CompareOrdinal(connections.Last().ArrivalUtc, flight.TimeUtc.First()) > 0)
-                {
+                { 
                     break;
                 }
 
