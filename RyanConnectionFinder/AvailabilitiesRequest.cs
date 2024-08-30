@@ -1,6 +1,6 @@
 ﻿namespace RyanConnectionFinder;
 
-public class AvailabilitiesRequest
+public static class AvailabilitiesRequest
 {
     
     public static string[]? FlightDates(string[] route)

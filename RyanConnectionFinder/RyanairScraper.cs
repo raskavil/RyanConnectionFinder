@@ -69,6 +69,8 @@ public static class RyanairScraper {
                 {
                     ArrivalUtc = flight.TimeUtc.Last(),
                     DepartureUtc = flight.TimeUtc.First(),
+                    Arrival = flight.Time.Last(),
+                    Departure = flight.Time.First(),
                     From = from,
                     To = to
                 });
@@ -89,5 +91,7 @@ public static class RyanairScraper {
         public string To;
         public string DepartureUtc;
         public string ArrivalUtc;
+        public string Departure;
+        public string Arrival;
     }
 }
