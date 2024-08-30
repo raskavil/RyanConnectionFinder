@@ -32,15 +32,17 @@ if (airportsConnection == null || airportsConnection.Length == 0) {
     Console.WriteLine("Connection not found");
     return;
 }
-for (int i = 0; i < airportsConnection.Count(); i++)
+for(var i = 0; i < airportsConnection.Count(); i++)
 { 
-    var FlightDates = AvailabilitiesRequest.FlightDates(airportsConnection.First());
-        if (FlightDates == null || FlightDates.Length == 0) 
+    var flightDates = AvailabilitiesRequest.FlightDates(airportsConnection[i]);
+        if (flightDates == null || flightDates.Length == 0) 
         {
             continue;
         }
-     Console.WriteLine("Connection: " + string.Join(" -> ", airportsConnection[i]));
-     Console.WriteLine("Flight dates: " + string.Join(", ", FlightDates));
+        
+    var flightTimes = RyanairScraper.Trips(airportsConnection[i], flightDates);    
+    
+    Utilities.PrintConnections(flightTimes);
 }
 
 
